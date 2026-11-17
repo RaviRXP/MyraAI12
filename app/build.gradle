@@ -1,0 +1,40 @@
+plugins {
+    id 'com.android.application' version '8.5.2'
+    id 'org.jetbrains.kotlin.android' version '1.9.24'
+}
+
+android {
+    namespace 'com.myra.ai'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.myra.ai"
+        minSdk 26
+        targetSdk 34
+        versionCode((System.getenv("GITHUB_RUN_NUMBER") ?: "1").toInteger())
+        versionName "1.0"
+    }
+
+    signingConfigs {
+        myra {
+            storeFile file("myra.keystore")
+            storePassword "myra1234"
+            keyAlias "myra"
+            keyPassword "myra1234"
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.myra
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}
